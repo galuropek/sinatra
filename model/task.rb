@@ -23,6 +23,7 @@ class Task
 
     @current_period = TimePeriod.new
     @start_time = @current_period.start.strftime "%H:%M:%S"
+    puts @start_time.inspect
     @active = true
     @status = :in_progress
     @time_periods << @current_period

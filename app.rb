@@ -6,11 +6,9 @@ class MyApp < Sinatra::Base
   set :root, File.dirname(__FILE__)
   set :sessions, true
 
-  before do
-    @task = Task.new('my task')
-  end
-
   get '/' do
+    @task = session[:task]
+
     erb :index
   end
 
@@ -27,8 +25,20 @@ class MyApp < Sinatra::Base
   end
 
   get '/start_stopwatch' do
-    @task.start_stopwatch
-    binding.pry
+    session[:task].start_stopwatch
+
+    redirect to('/')
+  end
+
+  get '/stop_stopwatch' do
+    session[:task].stop_stopwatch
+
+    redirect to('/')
+  end
+
+  get '/create_task' do
+    session[:task] = Task.new('my task')
+
     redirect to('/')
   end
 end
