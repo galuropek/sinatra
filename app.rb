@@ -41,4 +41,10 @@ class MyApp < Sinatra::Base
 
     redirect to('/')
   end
+
+  get '/pause_stopwatch' do
+    session[:task].pause_stopwatch
+
+    redirect to('/')
+  end
 end
