@@ -1,4 +1,5 @@
 require_relative 'time_period'
+require 'pry'
 
 class Task
   attr_accessor :name
@@ -22,7 +23,7 @@ class Task
     return if @active
 
     @current_period = TimePeriod.new
-    @start_time = @current_period.start.strftime "%H:%M:%S"
+    @start_time = @current_period.start.strftime "%H:%M:%S" unless @status == :pause
     puts @start_time.inspect
     @active = true
     @status = :in_progress
@@ -34,6 +35,7 @@ class Task
 
     @current_period.stop
     @active = false
+    @status = :pause
     @current_period = nil
   end
 
@@ -42,8 +44,10 @@ class Task
       puts 'Something went wrong, stopwatch already is closed o_O'
     else
       @current_period.stop if @active
+      @active = false
       @status = :closed
-      calc_total_task_time
+      @elapsed_time = calc_total_task_time
+      puts @time_periods.map(&:total).inspect
     end
   end
 
@@ -55,9 +59,7 @@ class Task
       return
     end
 
-    @time_periods.each do |time_period|
-      @elapsed_time += time_period.total
-    end
+    @time_periods.map(&:total).sum
   end
 end
 
