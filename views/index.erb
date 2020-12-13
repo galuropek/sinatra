@@ -6,10 +6,18 @@
 </head>
 <body>
 <div>
-  <h3><%= @task.name %></h3>
-  <p><%= @task.start_time %></p>
+  <h3>Task name: <%= @task&.name %></h3>
+  <p>start time: "<%= @task&.start_time %></p>
+  <p>status: <%= @task&.status %></p>
+  <p>status: <%= @task&.elapsed_time %></p>
+  <form method="get" action="/create_task">
+    <button type="submit" class="btn btn-primary">Create task</button>
+  </form>
   <form method="get" action="/start_stopwatch">
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Start</button>
+  </form>
+  <form method="get" action="/stop_stopwatch">
+    <button type="submit" class="btn btn-primary">Stop</button>
   </form>
 </div>
 
